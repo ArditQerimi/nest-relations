@@ -12,17 +12,16 @@ export class ShoppingCartService {
     private shoppingCartRepository: Repository<ShoppingCartEntity>,
   ) {}
 
-  async create(shoppingCartRepository: CreateShoppingCartDto) {
-    const result = await this.shoppingCartRepository.save(
-      shoppingCartRepository,
-    );
+  async create(shoppingCartDto: CreateShoppingCartDto) {
+    const result = await this.shoppingCartRepository.save(shoppingCartDto);
     return result.id;
   }
 
   async findAll(): Promise<ShoppingCartEntity[]> {
     return await this.shoppingCartRepository.find({
       relations: {
-        item: true,
+        item: { category: true },
+        // item: true,
       },
     });
   }

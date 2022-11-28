@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ShoppingCartEntity } from './shopping-cart/entities/shopping-cart.entity';
 import { ItemEntity } from './items/entities/item.entity';
+import { CategoryModule } from './category/category.module';
+import { CategoryEntity } from './category/entities/category.entity';
 
 @Module({
   imports: [
@@ -21,12 +23,13 @@ import { ItemEntity } from './items/entities/item.entity';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [ItemEntity, ShoppingCartEntity],
+        entities: [ItemEntity, ShoppingCartEntity, CategoryEntity],
         synchronize: true,
       }),
     }),
     ShoppingCartModule,
     ItemsModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

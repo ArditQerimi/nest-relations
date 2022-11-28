@@ -20,17 +20,21 @@ export class ItemsService {
 
   async loadItems(id: string): Promise<ItemEntity[]> {
     const foundedItem = await this.itemRepository.find({
-      where: { shoppingCart: { id: id } },
-      // where: { id: id },
+      // where: { shoppingCart: { id: id } },
+      where: { id: id },
       relations: {
         shoppingCart: true,
+        category: true,
       },
     });
+    console.log(foundedItem);
     return foundedItem;
   }
 
   findAll() {
-    return `This action returns all items`;
+    return this.itemRepository.find({
+      relations: { category: true, shoppingCart: true },
+    });
   }
 
   findOne(id: number) {
